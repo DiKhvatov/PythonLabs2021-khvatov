@@ -21,7 +21,7 @@ def dog(x0, y0, scale):
 
     ellipse(screen, (107, 103, 85), (x0 + scale * (-5), y0 + scale * (44), scale * 35, scale * 75))
     ellipse(screen, (107, 103, 85), (x0 + scale * (-23), y0 + scale * (110), scale * 42, scale * 17))
-    
+
     ellipse(screen, (107, 103, 85), (x0 + scale * (-5 + 55), y0 + scale * (44 + 23), scale * 35, scale * 75))
     ellipse(screen, (107, 103, 85), (x0 + scale * (-23 + 55), y0 + scale * (110 + 23), scale * 42, scale * 17))
 
@@ -43,6 +43,20 @@ def dog(x0, y0, scale):
     ellipse(screen, (0, 0, 0), (x0 - 7 * scale, y0, 14 * scale, 20 * scale), 1)  # left ear outline
     ellipse(screen, (107, 103, 85), (x0 + 60 * scale - 7 * scale, y0, 14 * scale, 20 * scale)) #right ear
     ellipse(screen, (0, 0, 0), (x0 + 60 * scale - 7 * scale, y0, 14 * scale, 20 * scale), 1)  # right ear outline
+
+    #eyes
+
+    ellipse(screen, (255, 255, 255), (x0 + scale * (-11 - 6.5 + 30), y0 + scale * 25, scale * 13, scale * 5))
+    ellipse(screen, (0, 0, 0), (x0 + scale * (-11 - 6.5 + 30), y0 + scale * 25, scale * 13, scale * 5), 1)
+    ellipse(screen, (0, 0, 0), (x0 + scale * (-11 + (-3) + 30), y0 + scale * (25 + 0.5), scale * 6, scale * 4))
+
+    ellipse(screen, (255, 255, 255), (x0 + scale * (11 - 6.5 + 30), y0 + scale * 25, scale * 13, scale * 5))
+    ellipse(screen, (0, 0, 0), (x0 + scale * (11 - 6.5 + 30), y0 + scale * 25, scale * 13, scale * 5), 1)
+    ellipse(screen, (0, 0, 0), (x0 + scale * (11 + (-3) + 30), y0 + scale * (25 + 0.5), scale * 6, scale * 4))
+
+    #mouth
+
+    arc(screen, (0, 0, 0), (x0 + scale * (30 - 21), y0 + scale * (65 - 15), 42 * scale, 30 * scale), 0.45, 2.69, 2)
 
 #background
 
@@ -89,7 +103,7 @@ ellipse(screen, (0, 0, 0), (350, 874, 34, 16), 1)
 
 
 
-dog(100, 600, 2.4)
+dog(100, 720, 2)
 
 pygame.display.update()
 clock = pygame.time.Clock()

@@ -102,6 +102,16 @@ ellipse(screen, (0, 0, 0), (378, 872, 34, 10), 1)
 ellipse(screen, (0, 0, 0), (350, 874, 34, 16), 1)
 
 
+rect = pygame.Rect(0, 0, 100, 150)
+surf = pygame.Surface(rect.size).convert_alpha()
+pygame.draw.ellipse(surf, (255, 0, 0), rect, 5)
+rotated_surf = pygame.transform.rotate(surf, 70)
+screen.fill((0, 0, 0))
+screen.blit(rotated_surf, (200, 300))
+pygame.display.flip()
+
+
+
 
 dog(100, 720, 2)
 

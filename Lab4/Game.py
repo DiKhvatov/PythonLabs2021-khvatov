@@ -2,14 +2,15 @@ import pygame
 from pygame.draw import *
 from random import randint
 from random import choice
+import pygame.freetype
 
 class Ball:
 	def __init__(self):
 		self.x = randint(100, 1100)
 		self.y = randint(100, 650)
 		self.r = randint(20, 50)
-		self.v_x = randint(-6, 6)
-		self.v_y = randint(-6, 6)
+		self.v_x = randint(-10, 10)
+		self.v_y = randint(-10, 10)
 		self.color = choice(COLORS)
 
 	def draw(self, surface):
@@ -29,7 +30,7 @@ class Ball:
 		for i, other in enumerate(pool):
 			if i <= j:
 				continue
-			elif ((other.x - self.x)**2 + (other.y - self.y)**2)**0.5 <= (other.r + self.r):
+			elif ((other.x - self.x)**2 + (other.y - self.y)**2)**0.5 <= (other.r + self.r) - 5:
 				m_1 = (self.r)**2
 				m_2 = (other.r)**2
 				cos = (other.x - self.x) / (other.r + self.r)
@@ -46,11 +47,34 @@ class Ball:
 				self.v_y = v_n1b * (-cos) + v_t1b * sin
 				other.v_x = v_n2b * sin + v_t2b * cos
 				other.v_y = v_n2b * (-cos) + v_t2b * sin
+
+	def hit(self, pos, pool, p):
+		global score
+		if ((pos[0] - self.x)**2 + (pos[1] - self.y)**2)**0.5 <= (self.r) * (5/6):
+			score += 1
+			self.x = randint(100, 1100)
+			self.y = randint(100, 650)
+			stop = true
+			while stop:
+				for i, other in enumerate(pool, p):
+					if i == p:
+						continue
+					elif ((other.x - self.x)**2 + (other.y - self.y)**2)**0.5 <= (other.r + self.r) - 5:
+						self.x = randint(100, 1100)
+						self.y = randint(100, 650)
+					else:
+						stop = false
+
 pygame.init()
 
 balls = []
 FPS = 120
 screen = pygame.display.set_mode((1200, 750))
+score = 0
+
+pygame.display.set_caption('Show Text')
+font = pygame.font.Font('freesansbold.ttf', 32)
+
 
 AMBER = (254, 124, 0)
 BANANA_YELLOW = (255, 216, 50)
@@ -64,7 +88,7 @@ pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
 
-for i in range(randint(1, 20)):
+for i in range(randint(1, 50)):
 	balls.append(Ball())
 
 while not finished:
@@ -73,15 +97,20 @@ while not finished:
         if event.type == pygame.QUIT:
             finished = True
         elif event.type == pygame.MOUSEBUTTONDOWN:
-        	print("Click!")
+        	pos = pygame.mouse.get_pos()
+        	for p in range(len(balls)):
+        		balls[p].hit(pos, balls, p)
     for j in range(len(balls)):
     	balls[j].draw(screen)
     	balls[j].move()
     	balls[j].collision()
     	balls[j].interaction(balls, j)
+    text = font.render("Score " + str(score), True, (254, 124, 0), (1, 27, 86))
+    textRect = text.get_rect()
+    textRect.center = (70, 20)
+    screen.blit(text, textRect)
     pygame.display.update()
     screen.fill(BLACK)
-
 pygame.quit()
 
 

@@ -2,7 +2,7 @@ import pygame
 from pygame.draw import *
 from random import randint
 from random import choice
-import pygame.freetype
+import json
 
 class Ball:
 	def __init__(self):
@@ -14,7 +14,7 @@ class Ball:
 		self.color = choice(COLORS)
 
 	def draw(self, surface):
-		circle(surface, self.color, (self.x, self.y), (self.r))
+		circle(surface, self.color, (int(self.x + 0.5), int(self.y + 0.5)), (self.r))
 
 	def move(self):
 		self.x += self.v_x
@@ -54,17 +54,21 @@ class Ball:
 			score += 1
 			self.x = randint(100, 1100)
 			self.y = randint(100, 650)
-			stop = true
+			stop = True
 			while stop:
-				for i, other in enumerate(pool, p):
+				for i, other in enumerate(pool):
 					if i == p:
 						continue
-					elif ((other.x - self.x)**2 + (other.y - self.y)**2)**0.5 <= (other.r + self.r) - 5:
+					elif ((other.x - self.x) ** 2 + (other.y - self.y) ** 2) ** 0.5 <= (other.r + self.r):
 						self.x = randint(100, 1100)
 						self.y = randint(100, 650)
 					else:
-						stop = false
-
+						stop = False
+			self.v_x = randint(-10, 10)
+			self.v_y = randint(-10, 10)
+	def energy(self):
+		self.E = ((self.r) ** 2) * ((self.v_x) ** 2 + (self.v_y) ** 2)
+		return self.E
 pygame.init()
 
 balls = []
@@ -88,29 +92,45 @@ pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
 
-for i in range(randint(1, 50)):
+for i in range(randint(1, 25)):
 	balls.append(Ball())
 
 while not finished:
-    clock.tick(FPS)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            finished = True
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-        	pos = pygame.mouse.get_pos()
-        	for p in range(len(balls)):
-        		balls[p].hit(pos, balls, p)
-    for j in range(len(balls)):
-    	balls[j].draw(screen)
-    	balls[j].move()
-    	balls[j].collision()
-    	balls[j].interaction(balls, j)
-    text = font.render("Score " + str(score), True, (254, 124, 0), (1, 27, 86))
-    textRect = text.get_rect()
-    textRect.center = (70, 20)
-    screen.blit(text, textRect)
-    pygame.display.update()
-    screen.fill(BLACK)
+	clock.tick(FPS)
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			finished = True
+		elif event.type == pygame.MOUSEBUTTONDOWN:
+			pos = pygame.mouse.get_pos()
+			for p in range(len(balls)):
+				balls[p].hit(pos, balls, p)
+	Energy = 0
+	for j in range(len(balls)):
+		balls[j].draw(screen)
+		balls[j].move()
+		balls[j].collision()
+		balls[j].interaction(balls, j)
+		Energy += balls[j].energy()
+	text = font.render("Score " + str(score), True, (254, 124, 0), (1, 27, 86))
+	textRect = text.get_rect()
+	textRect.center = (70, 20)
+	screen.blit(text, textRect)
+	pygame.display.update()
+	screen.fill(BLACK)
+	print(Energy)
+
+
+name = input()
+
+with open('./records.json', 'r') as f:
+	records = json.load(f)
+
+records.append({'name': name, "points": score})
+
+with open('./records.json', 'w') as f:
+	records = json.dump(records, f)
+
+
 pygame.quit()
 
 

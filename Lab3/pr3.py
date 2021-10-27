@@ -1,20 +1,11 @@
 import pygame
 from pygame.draw import *
 
-pygame.init()
-
-FPS = 30
-screen = pygame.display.set_mode((800, 1000))
-x = 0.
-l = 800.
-N = 16
-
-
 def draw_a_fence(x0, y0, scale):
 	#рисует забор 300 на 180 в левым верхним краем в точке x0 y0 в масштабе scale
 	rect(screen, (203, 174, 0), (x0, y0, 300 * scale, 180 * scale))
 	h = (300 * scale) / 16
-	for i in range(N + 1):
+	for i in range(16 + 1):
 		line(screen, (0, 0, 0), (x0 + i * h, y0), (x0 + i * h, y0 + 180 * scale))
 
 def dog_left(x0, y0, scale):
@@ -27,7 +18,7 @@ def dog_left(x0, y0, scale):
 
     ellipse(screen, (107, 103, 85), (x0 + scale * (-5), y0 + scale * (44), scale * 30, scale * 75))
     ellipse(screen, (107, 103, 85), (x0 + scale * (-23), y0 + scale * (110), scale * 42, scale * 17))
-
+    #front legs outline
     ellipse(screen, (107, 103, 85), (x0 + scale * (-5 + 55), y0 + scale * (44 + 23), scale * 30, scale * 75))
     ellipse(screen, (107, 103, 85), (x0 + scale * (-23 + 55), y0 + scale * (110 + 23), scale * 42, scale * 17))
 
@@ -36,7 +27,7 @@ def dog_left(x0, y0, scale):
     ellipse(screen, (107, 103, 85), (x0 + scale * (84 - 20), y0 + scale * (14), scale * 40, scale * 47))
     ellipse(screen, (107, 103, 85), (x0 + scale * (84 - 20 + 31), y0 + scale * (14 + 30), scale * 12, scale * 45))
     ellipse(screen, (107, 103, 85), (x0 + scale * (84 - 20 + 12), y0 + scale * (14 + 30 + 40.5), scale * 25, scale * 12))
-
+    #back legs outline
     ellipse(screen, (107, 103, 85), (x0 + scale * (84 - 20 + 59), y0 + scale * (14 + 19), scale * 40, scale * 47))
     ellipse(screen, (107, 103, 85), (x0 + scale * (84 - 20 + 31 + 59), y0 + scale * (14 + 30 + 19), scale * 12, scale * 45))
     ellipse(screen, (107, 103, 85), (x0 + scale * (84 - 20 + 12 + 59), y0 + scale * (14 + 30 + 40.5 + 19), scale * 25, scale * 12))
@@ -52,10 +43,11 @@ def dog_left(x0, y0, scale):
 
     #eyes
 
+    #left eye
     ellipse(screen, (255, 255, 255), (x0 + scale * (-11 - 6.5 + 30), y0 + scale * 25, scale * 13, scale * 5))
     ellipse(screen, (0, 0, 0), (x0 + scale * (-11 - 6.5 + 30), y0 + scale * 25, scale * 13, scale * 5), 1)
     ellipse(screen, (0, 0, 0), (x0 + scale * (-11 + (-3) + 30), y0 + scale * (25 + 0.5), scale * 6, scale * 4))
-
+    #right eye
     ellipse(screen, (255, 255, 255), (x0 + scale * (11 - 6.5 + 30), y0 + scale * 25, scale * 13, scale * 5))
     ellipse(screen, (0, 0, 0), (x0 + scale * (11 - 6.5 + 30), y0 + scale * 25, scale * 13, scale * 5), 1)
     ellipse(screen, (0, 0, 0), (x0 + scale * (11 + (-3) + 30), y0 + scale * (25 + 0.5), scale * 6, scale * 4))
@@ -78,7 +70,7 @@ def dog_right(x0, y0, scale):
 
     ellipse(screen, (107, 103, 85), (x0 + scale * (-25), y0 + scale * (44), scale * 30, scale * 75))
     ellipse(screen, (107, 103, 85), (x0 + scale * (-19), y0 + scale * (110), scale * 42, scale * 17))
-
+    #front legs outline
     ellipse(screen, (107, 103, 85), (x0 + scale * (-80), y0 + scale * (44 + 23), scale * 30, scale * 75))
     ellipse(screen, (107, 103, 85), (x0 + scale * (-74), y0 + scale * (110 + 23), scale * 42, scale * 17))
 
@@ -87,7 +79,7 @@ def dog_right(x0, y0, scale):
     ellipse(screen, (107, 103, 85), (x0 + scale * (-104), y0 + scale * (14), scale * 40, scale * 47))
     ellipse(screen, (107, 103, 85), (x0 + scale * (-107), y0 + scale * (14 + 30), scale * 12, scale * 45))
     ellipse(screen, (107, 103, 85), (x0 + scale * (-101), y0 + scale * (14 + 30 + 40.5), scale * 25, scale * 12))
-
+    #back legs outline
     ellipse(screen, (107, 103, 85), (x0 + scale * (-163), y0 + scale * (14 + 19), scale * 40, scale * 47))
     ellipse(screen, (107, 103, 85), (x0 + scale * (-166), y0 + scale * (14 + 30 + 19), scale * 12, scale * 45))
     ellipse(screen, (107, 103, 85), (x0 + scale * (-160), y0 + scale * (14 + 30 + 40.5 + 19), scale * 25, scale * 12))
@@ -102,10 +94,11 @@ def dog_right(x0, y0, scale):
     ellipse(screen, (0, 0, 0), (x0 + scale * (-7), y0, 14 * scale, 20 * scale), 1)  # right ear outline
     #eyes
 
+    #left eye
     ellipse(screen, (255, 255, 255), (x0 + scale * (-25.5), y0 + scale * 25, scale * 13, scale * 5))
     ellipse(screen, (0, 0, 0), (x0 + scale * (-25.5), y0 + scale * 25, scale * 13, scale * 5), 1)
     ellipse(screen, (0, 0, 0), (x0 + scale * (-22), y0 + scale * (25 + 0.5), scale * 6, scale * 4))
-
+    #right eye
     ellipse(screen, (255, 255, 255), (x0 + scale * (-47.5), y0 + scale * 25, scale * 13, scale * 5))
     ellipse(screen, (0, 0, 0), (x0 + scale * (-47.5), y0 + scale * 25, scale * 13, scale * 5), 1)
     ellipse(screen, (0, 0, 0), (x0 + scale * (-44), y0 + scale * (25 + 0.5), scale * 6, scale * 4))
@@ -118,6 +111,8 @@ def dog_right(x0, y0, scale):
     polygon(screen, (0, 0, 0), [(x0 + scale * (-45), y0 + scale * (54)), (x0 + scale * (-43), y0 + scale * (44)), (x0 + scale * (-41), y0 + scale * (52)), (x0 + scale * (-45), y0 + scale * (54))], 1)
     polygon(screen, (0, 0, 0), [(x0 + scale * (-15), y0 + scale * (54)), (x0 + scale * (-17), y0 + scale * (44)), (x0 + scale * (-19), y0 + scale * (52)), (x0 + scale * (-15), y0 + scale * (54))], 1)
 
+pygame.init()
+screen = pygame.display.set_mode((800, 1000))
 
 
 #background
@@ -132,6 +127,8 @@ draw_a_fence(0, 190, 1.25)
 draw_a_fence(400, 250, 1.3)
 draw_a_fence(-32, 290, 1.3)
 
+#пёсель за будкой
+
 dog_right(760, 550, 1.1)
 
 #cab
@@ -140,7 +137,7 @@ polygon(screen, (217, 173, 0), [(512, 684), (586, 590), (652, 716), (512, 684)])
 polygon(screen, (217, 173, 0), [(586, 590), (636, 562), (696, 672), (652, 716), (586, 590)])
 polygon(screen, (203, 174, 0), [(512, 684), (512, 830), (652, 900), (652, 716), (512, 684)])
 polygon(screen, (203, 174, 0), [(652, 716), (696, 672), (696, 806), (652, 900), (652, 716)])
-
+#cab outline
 polygon(screen, (0, 0, 0), [(586, 590), (636, 562), (696, 672), (652, 716), (586, 590)], 1)
 polygon(screen, (0, 0, 0), [(512, 685), (586, 590), (652, 716), (512, 684)], 1)
 polygon(screen, (0, 0, 0), [(512, 684), (512, 830), (652, 900), (652, 716), (512, 685)], 1)
@@ -170,6 +167,8 @@ rotated_surf = pygame.transform.rotate(surf, 20)
 screen.blit(rotated_surf, (535, 710))
 pygame.display.flip()
 
+#пёсели
+
 dog_left(50, 450, 1.25)
 dog_left(550, 740, 4)
 dog_right(350, 650, 1.5)
@@ -180,7 +179,7 @@ clock = pygame.time.Clock()
 finished = False
 
 while not finished:
-    clock.tick(FPS)
+    clock.tick(80)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             finished = True
